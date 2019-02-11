@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: truckmanager-web-service
+spec:
+  selector:
+    app: truckamanger-web
+    tier: frontend
+  ports:
+    - protocol: "TCP"
+      port: 80
+      targetPort: 80
+      nodePort: 30001
+  type: LoadBalancer

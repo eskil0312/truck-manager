@@ -1,0 +1,26 @@
+version: '3.5'
+
+services:
+
+  web:
+    container_name: truckmanager.web
+    build:
+      context: ./TruckManager.Web
+      dockerfile: Dockerfile
+    command: npm start
+    volumes:
+      - './TruckManager.Web/:/srv/app/truckmanager-client'
+      - '/srv/app/truckmanager-client/node_modules'
+    ports:
+      - '3000:3000'
+    environment:
+      - NODE_ENV=development
+  api:
+    container_name: truckmanager.api
+    build:
+      context: ./TruckManager.API
+      dockerfile: Dockerfile
+    expose:
+      - "80"
+    ports:
+      - "8080:80"
