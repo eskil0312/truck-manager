@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using TruckManager.API.Services;
+using Microsoft.AspNetCore.Cors;
 
 namespace TruckManager.API
 {
@@ -27,6 +28,7 @@ namespace TruckManager.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<TruckService>();
+            services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
@@ -42,6 +44,11 @@ namespace TruckManager.API
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowCredentials().AllowAnyMethod();
+            });
 
             app.UseHttpsRedirection();
             app.UseMvc();

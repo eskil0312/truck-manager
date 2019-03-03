@@ -6,7 +6,7 @@ services:
     container_name: truckmanager.web
     build:
       context: ./TruckManager.Web
-      dockerfile: Dockerfile
+      dockerfile: development.Dockerfile
     command: npm start
     volumes:
       - './TruckManager.Web/:/srv/app/truckmanager-client'

@@ -14,15 +14,16 @@ namespace TruckManager.API.Controllers
         public TrucksController(TruckService truckService){
             _truckService = truckService;
         }
+        
 
         [HttpGet]
-        public ActionResult<List<Trucks>> Get()
+        public ActionResult<List<Truck>> Get()
         {
             return _truckService.Get();
         }
 
         [HttpGet("{id:length(24)}", Name = "GetTruck")]
-        public ActionResult<Trucks> Get(string id)
+        public ActionResult<Truck> Get(string id)
         {
             var book = _truckService.Get(id);
 
@@ -35,26 +36,22 @@ namespace TruckManager.API.Controllers
         }
 
         [HttpPost]
-        public ActionResult<Trucks> Create(Trucks truck)
+        public ActionResult<Truck> Create(Truck truck)
         {
             _truckService.Create(truck);
 
             return CreatedAtRoute("GetTruck", new { id = truck.Id.ToString() }, truck);
         }
 
-        [HttpPut("{id:length(24)}")]
-        public IActionResult Update(string id, Trucks truckIn)
-        {
-            var truck = _truckService.Get(id);
 
-            if (truck == null)
-            {
+        [HttpPut("{id}")]
+        public ActionResult<Truck> AddTanking(string id, [FromBody] Tanking tanking)
+        {
+            var updatedTruck = _truckService.AddTanking(id, tanking);
+            if(updatedTruck == null){
                 return NotFound();
             }
-
-            _truckService.Update(id, truckIn);
-
-            return NoContent();
+            return updatedTruck; 
         }
 
         [HttpDelete("{id:length(24)}")]
