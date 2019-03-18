@@ -3,30 +3,41 @@ import Greeting from '../components/greeting';
 import Background from "../assets/images/asphalt-truck.jpg";
 import Form from './Form';
 import { addTanking,getTrucks } from "../api";
+import styles from "./styles.module.scss";
+import TankingList from "./TankingList";
 
 export default class RegisterFuel extends Component {
 
-    upload = (values) => {
-        console.log(values)
-        const newValue = {
-            date:"2.23.2013",
-            distance:133,
-            cost:133,
-            currency:"NOK",
-            quantityLiter:11
-        }
+    state = {
+        data:null
+    }
+    componentDidMount(){
         getTrucks()
         .then((response) => {
-            console.log(response);
+            const formData = response.data.find(d => d.id === "5c588cc970a45ab81c86e1f7").tankings;
+            this.setState({ 
+                data: formData
+            });
         })
         .catch((error) => {
             console.log(error);
         })
 
+    }
+
+    upload = (values) => {
+        const date = new Date()
+        const valuesWithDate = {
+            ...values,
+            date: date.getDate().toString() + "." + date.getMonth().toString() + "." + date.getFullYear().toString() 
+        }
+        
         const id = "5c588cc970a45ab81c86e1f7"
-        addTanking(newValue, id)
+        addTanking(valuesWithDate, id)
         .then((response) => {
-            console.log(response);
+            this.setState({
+                data:response.data.tankings
+            });
         })
         .catch((error) => {
             console.log(error);
@@ -35,11 +46,17 @@ export default class RegisterFuel extends Component {
     }
 
     render(){
+        const {data} = this.state;
+
         return(
-            <div>
+            <React.Fragment>
                 <Greeting name="Eskil" location="Register Fuel" background={Background} />
-                <Form upload= {(values) => this.upload(values)}/>
-            </div>
+                    <div className={styles.regFuelContainer}>
+                    <Form upload= {(values) => this.upload(values)}/>
+                    {data ? <TankingList data={data}/> : null}
+                </div>
+            </React.Fragment>
+            
         )
     }
 }

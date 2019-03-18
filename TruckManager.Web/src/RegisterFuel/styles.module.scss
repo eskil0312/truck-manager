@@ -1,5 +1,10 @@
-.form{
-    display: grid;
-    max-width: 800px;
-    padding: 20px;
+
+.regFuelContainer{
+    
+    max-width: 700px;
+    margin: auto;
+
+    .form{
+        display: grid;
+    }
 }

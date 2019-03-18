@@ -34,13 +34,11 @@ const fuelTypes = [
 const Form = (props) => {
 
     const [values, setValues] = React.useState({
-        regNumber:'',
-        totalDistance: '',
-        tankingCost: '',
-        tankingQuantity: '',
+        distance: '',
+        cost: '',
+        quantityLiter: '',
         fuelType: 'disel',
         currency: 'NOK',
-
       });
       
     const handleChange = name => event => {
@@ -49,32 +47,26 @@ const Form = (props) => {
 
     return(
         <form className={styles.form}>
-            <TextField
-                id="reg-numbre"
-                label="Reg Number"
-                value={values.regNumber}
-                onChange={handleChange('regNumber')}
-                margin="normal"
-            />
+
             <TextField
                 id="total-distance"
                 label="Total Distance"
-                value={values.totalDistance}
-                onChange={handleChange('totalDistance')}
+                value={values.distance}
+                onChange={handleChange('distance')}
                 margin="normal"
             />
             <TextField
                 id="tanking-cost"
                 label="Tanking Cost"
-                value={values.tankingCost}
-                onChange={handleChange('tankingCost')}
+                value={values.cost}
+                onChange={handleChange('cost')}
                 margin="normal"
             />
             <TextField
                 id="tanking-quantity"
                 label="Tanking Quantity"
-                value={values.tankingQuantity}
-                onChange={handleChange('tankingQuantity')}
+                value={values.quantityLiter}
+                onChange={handleChange('quantityLiter')}
                 margin="normal"
             />
             <TextField

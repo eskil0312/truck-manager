@@ -9,8 +9,8 @@ services:
       dockerfile: development.Dockerfile
     command: npm start
     volumes:
-      - './TruckManager.Web/:/srv/app/truckmanager-client'
-      - '/srv/app/truckmanager-client/node_modules'
+      - './TruckManager.Web/:/src/app/truckmanager-client'
+      - '/src/app/truckmanager-client/node_modules'
     ports:
       - '3000:3000'
     environment:
