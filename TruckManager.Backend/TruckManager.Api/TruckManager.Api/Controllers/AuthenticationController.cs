@@ -1,44 +1,61 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using TruckManager.Application.Services.Authentication;
+﻿using ErrorOr;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using TruckManager.Application.Authentication.Commands.Register;
+using TruckManager.Application.Authentication.Common;
+using TruckManager.Application.Authentication.Queries.Login;
 using TruckManager.Contracts.Authentication;
+using TruckManager.Domain.Common.Errors;
 
 namespace TruckManager.Api.Controllers;
 
-[ApiController]
 [Route("auth")]
-public class AuthenticationController : ControllerBase
+public class AuthenticationController : ApiController
 {
-    private IAuthenticationService _authenticationService;
+    private readonly IMediator _mediator;
 
-    public AuthenticationController(IAuthenticationService authenticationService)
+    public AuthenticationController(IMediator mediator)
     {
-        _authenticationService = authenticationService;
+
+        _mediator = mediator;
     }
 
     [HttpPost("register")]
-    public IActionResult Register(RegisterRequest request)
+    public async Task<IActionResult> Register(RegisterRequest request)
     {
-        var authResponse = _authenticationService.Register(request.Email,
-                                                           request.Password,
-                                                           request.FirstName,
-                                                           request.LastName);
-        var response = new AuthenticationResponse(authResponse.user.Id,
-                                                  authResponse.user.FirstName,
-                                                  authResponse.user.LastName,
-                                                  authResponse.user.Email,
-                                                  authResponse.Token);
-        return Ok(response);
+        var command = new RegisterCommand(request.Email, request.Password, request.FirstName, request.LastName);
+
+        ErrorOr<AuthenticationResult> authResult = await _mediator.Send(command);
+
+        return authResult.Match(
+            authResult => Ok(MapAuthRsult(authResult)),
+            Problem);
+
     }
 
+    
+
     [HttpPost("login")]
-    public IActionResult Login(LoginRequest request)
+    public async Task<IActionResult> Login(LoginRequest request)
     {
-        var authResponse = _authenticationService.Login(request.Email, request.Password);
-        var response = new AuthenticationResponse(authResponse.user.Id,
-                                                  authResponse.user.FirstName,
-                                                  authResponse.user.LastName,
-                                                  authResponse.user.Email,
-                                                  authResponse.Token);
-        return Ok(response);
+        var query = new LoginQuery(request.Email, request.Password);
+
+        var authResult = await _mediator.Send(query);
+        if(authResult.IsError && authResult.FirstError == Errors.Authentication.InvalidCredentials)
+        {
+            return Problem(statusCode: StatusCodes.Status401Unauthorized, title: authResult.FirstError.Description);
+        }
+        return authResult.Match(
+           authResult => Ok(MapAuthRsult(authResult)),
+           Problem);
+    }
+
+    private AuthenticationResponse MapAuthRsult(AuthenticationResult authResult)
+    {
+        return new AuthenticationResponse(authResult.User.Id,
+                                                          authResult.User.FirstName,
+                                                          authResult.User.LastName,
+                                                          authResult.User.Email,
+                                                          authResult.Token);
     }
 }

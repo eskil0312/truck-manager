@@ -6,8 +6,7 @@ using TruckManager.Core.Features.Truck;
 namespace TruckManager.Api.Controllers;
 
 [Route("api/[controller]")]
-[ApiController]
-public class TruckController : ControllerBase
+public class TruckController : ApiController
 {
     private readonly IMediator _mediator;
 
