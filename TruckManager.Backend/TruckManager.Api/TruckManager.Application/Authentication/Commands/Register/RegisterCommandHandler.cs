@@ -22,6 +22,8 @@ namespace TruckManager.Application.Authentication.Commands.Register
 
         public async Task<ErrorOr<AuthenticationResult>> Handle(RegisterCommand command, CancellationToken cancellationToken)
         {
+            await Task.CompletedTask;
+
             if (_userRespository.GetUserByEmail(command.Email) is not null)
             {
                 return Errors.User.DuplicateEmail;

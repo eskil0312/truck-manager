@@ -1,4 +1,4 @@
-using System.Reflection;
+using TruckManager.Api;
 using TruckManager.Application;
 using TruckManager.Infrastrucure;
 
@@ -7,9 +7,8 @@ using TruckManager.Infrastrucure;
 
 var builder = WebApplication.CreateBuilder(args);
 {
-    builder.Services.AddControllers();
-    builder.Services.AddEndpointsApiExplorer();
     builder.Services
+        .AddPresentation()
         .AddApplication()
         .AddInfrastructure(builder.Configuration);
 }
