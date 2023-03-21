@@ -5,23 +5,29 @@ using TruckManager.Core.Features.Truck;
 
 namespace TruckManager.Api.Controllers;
 
-[Route("api/[controller]")]
-public class TruckController : ApiController
+[Route("[controller]")]
+public class TrucksController : ApiController
 {
     private readonly IMediator _mediator;
 
-    public TruckController(IMediator mediator)
+    public TrucksController(IMediator mediator)
     {
         _mediator = mediator;
     }
 
     [HttpGet]
-    public async Task<IEnumerable<string>> GetTrucks()
+    public IActionResult ListTrucks()
     {
-        var query = new GetAllTrucksQuery(2);
-        return await _mediator.Send(query);
+        return Ok(Array.Empty<string>());
     }
 
+    //[HttpGet]
+    //public async Task<IEnumerable<string>> GetTrucks()
+    //{
+    //    var query = new GetAllTrucksQuery(2);
+    //    return await _mediator.Send(query);
+    //}
+     
     [HttpGet("{id:length(24)}", Name = "GetTruck")]
     public Task<TruckResponse> GetTruckById(string id)
     {
