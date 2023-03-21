@@ -1,7 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TruckManager.Api.Dtos;
-using TruckManager.Core.Features.Truck;
 
 namespace TruckManager.Api.Controllers;
 

@@ -6,38 +6,37 @@ using TruckManager.Application.Common.Interfaces.Percistence;
 using TruckManager.Domain.Common.Errors;
 using TruckManager.Domain.Entities;
 
-namespace TruckManager.Application.Authentication.Queries.Login
+namespace TruckManager.Application.Authentication.Queries.Login;
+
+public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<AuthenticationResult>>
 {
-    public class LoginQueryHandler : IRequestHandler<LoginQuery, ErrorOr<AuthenticationResult>>
+    private readonly IJwtTokenGenerator _jwtGenerator;
+    private readonly IUserRepository _userRespository;
+
+
+    public LoginQueryHandler(IJwtTokenGenerator jwtGenerator, IUserRepository userRespository)
     {
-        private readonly IJwtTokenGenerator _jwtGenerator;
-        private readonly IUserRepository _userRespository;
+        _jwtGenerator = jwtGenerator;
+        _userRespository = userRespository;
+    }
 
+    public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
+    {
+        await Task.CompletedTask;
 
-        public LoginQueryHandler(IJwtTokenGenerator jwtGenerator, IUserRepository userRespository)
+        if (_userRespository.GetUserByEmail(query.Email) is not User user)
         {
-            _jwtGenerator = jwtGenerator;
-            _userRespository = userRespository;
+            return Errors.Authentication.InvalidCredentials;
+
         }
 
-        public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
+        if (user.Password != query.Password)
         {
-            await Task.CompletedTask;
-
-            if (_userRespository.GetUserByEmail(query.Email) is not User user)
-            {
-                return Errors.Authentication.InvalidCredentials;
-
-            }
-
-            if (user.Password != query.Password)
-            {
-                return Errors.Authentication.InvalidCredentials;
-            }
-
-            var token = _jwtGenerator.GenerateToken(user);
-
-            return new AuthenticationResult(user, token);
+            return Errors.Authentication.InvalidCredentials;
         }
+
+        var token = _jwtGenerator.GenerateToken(user);
+
+        return new AuthenticationResult(user, token);
     }
 }

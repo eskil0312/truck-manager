@@ -1,15 +1,14 @@
 ﻿using FluentValidation;
 
-namespace TruckManager.Application.Authentication.Queries.Login
+namespace TruckManager.Application.Authentication.Queries.Login;
+
+
+public class LoginQueryvalidator : AbstractValidator<LoginQuery>
 {
-
-    public class LoginQueryvalidator : AbstractValidator<LoginQuery>
+    public LoginQueryvalidator()
     {
-        public LoginQueryvalidator()
-        {
-            RuleFor(x => x.Email).NotEmpty();
-            RuleFor(x => x.Password).NotEmpty();
+        RuleFor(x => x.Email).NotEmpty();
+        RuleFor(x => x.Password).NotEmpty();
 
-        }
     }
 }
