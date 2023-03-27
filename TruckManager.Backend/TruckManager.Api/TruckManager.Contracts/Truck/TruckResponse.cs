@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TruckManager.Contracts.Truck
+﻿namespace TruckManager.Contracts.Truck
 {
-    internal class TruckResponse
-    {
-    }
+    public record TruckResponse(Guid Id,
+            string RegistrationNumber,
+            string FuelType,
+            int FuelTankSize,
+            DateTime RegistrationDate,
+            DateTime VeichleAllowenceExperationDate,
+            int Weight,
+            List<string> Incidents,
+            List<string> Tankings,
+            DateTime UpdateDateTime,
+            DateTime CreatedDateTime);
 }

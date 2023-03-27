@@ -1,47 +1,30 @@
-﻿using MediatR;
+﻿using MapsterMapper;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using TruckManager.Api.Dtos;
+using TruckManager.Application.Trucks.Commands.CreateTruck;
+using TruckManager.Contracts.Truck;
 
 namespace TruckManager.Api.Controllers;
 
-[Route("[controller]")]
+[Route("trucks")]
 public class TrucksController : ApiController
 {
     private readonly IMediator _mediator;
+    private readonly IMapper _mapper;
 
-    public TrucksController(IMediator mediator)
+    public TrucksController(IMediator mediator, IMapper mapper)
     {
         _mediator = mediator;
-    }
-
-    [HttpGet]
-    public IActionResult ListTrucks()
-    {
-        return Ok(Array.Empty<string>());
-    }
-
-    //[HttpGet]
-    //public async Task<IEnumerable<string>> GetTrucks()
-    //{
-    //    var query = new GetAllTrucksQuery(2);
-    //    return await _mediator.Send(query);
-    //}
-     
-    [HttpGet("{id:length(24)}", Name = "GetTruck")]
-    public Task<TruckResponse> GetTruckById(string id)
-    {
-        throw new NotImplementedException();
+        _mapper = mapper;
     }
 
     [HttpPost]
-    public Task<TruckResponse> Create(CreateTruckRequest truck)
+    public async Task<IActionResult> CreateTruck(CreateTruckRequest request)
     {
-        throw new NotImplementedException();
-    }
-
-    [HttpDelete("{id:length(24)}")]
-    public IActionResult Delete(string id)
-    {
-        throw new NotImplementedException();
+        var command = _mapper.Map<CreateTruckCommand>(request);
+        var createTruckResult = await _mediator.Send(command);
+        return createTruckResult.Match(
+            truck => Ok(_mapper.Map<TruckResponse>(truck)),
+            Problem);
     }
 }

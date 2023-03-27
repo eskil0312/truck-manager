@@ -5,15 +5,16 @@ using TruckManager.Domain.TruckAggregate.ValueObjects;
 
 namespace TruckManager.Domain.TruckAggregate
 {
-    public sealed class TruckAggregate : AggregateRoot<TruckId>
+    public sealed class Truck : AggregateRoot<TruckId>
     {
-        private TruckAggregate(
+        private Truck(
             TruckId truckId,
             string registrationNumber,
             string fuelType,
             int fuelTankSize,
+            int weight,
             DateTime registrationDate,
-            string veichleAllowenceExperationDate,
+            DateTime veichleAllowenceExperationDate,
             CompanyId companyId,
             DateTime updateDateTime,
             DateTime createdDateTime)
@@ -22,6 +23,7 @@ namespace TruckManager.Domain.TruckAggregate
             RegistrationNumber = registrationNumber;
             FuelType = fuelType;
             FuelTankSize = fuelTankSize;
+            Weight = weight;
             RegistrationDate = registrationDate;
             VeichleAllowenceExperationDate = veichleAllowenceExperationDate;
             CompanyId = companyId;
@@ -34,10 +36,11 @@ namespace TruckManager.Domain.TruckAggregate
         public string FuelType { get; }
 
         public int FuelTankSize { get; }
+        public int Weight { get; }
 
         public DateTime RegistrationDate { get; }
 
-        public string VeichleAllowenceExperationDate { get; }
+        public DateTime VeichleAllowenceExperationDate { get; }
 
         public CompanyId CompanyId { get; }
 
@@ -47,18 +50,19 @@ namespace TruckManager.Domain.TruckAggregate
 
         public List<TruckTanking> _tankings = new();
 
-        public IReadOnlyList<TruckTanking> Tanking => _tankings.AsReadOnly();
+        public IReadOnlyList<TruckTanking> Tankings => _tankings.AsReadOnly();
 
         public DateTime UpdateDateTime { get; }
 
         public DateTime CreatedDateTime { get; }
 
 
-        public static TruckAggregate Create(string registrationNumber,
+        public static Truck Create(string registrationNumber,
             string fuelType,
             int fuelTankSize,
+            int weight,
             DateTime registrationDate,
-            string veichleAllowenceExperationDate,
+            DateTime veichleAllowenceExperationDate,
             CompanyId companyId)
         {
             return new(
@@ -66,6 +70,7 @@ namespace TruckManager.Domain.TruckAggregate
                 registrationNumber,
                 fuelType,
                 fuelTankSize,
+                weight,
                 registrationDate,
                 veichleAllowenceExperationDate,
                 companyId, DateTime.Now, DateTime.Now);
