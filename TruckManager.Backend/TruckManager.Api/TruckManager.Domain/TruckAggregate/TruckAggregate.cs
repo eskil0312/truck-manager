@@ -36,6 +36,7 @@ namespace TruckManager.Domain.TruckAggregate
         public string FuelType { get; }
 
         public int FuelTankSize { get; }
+
         public int Weight { get; }
 
         public DateTime RegistrationDate { get; }

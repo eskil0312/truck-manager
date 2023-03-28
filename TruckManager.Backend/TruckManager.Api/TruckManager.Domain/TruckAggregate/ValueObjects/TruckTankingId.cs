@@ -15,6 +15,11 @@ namespace TruckManager.Domain.TruckAggregate.ValueObjects
         {
             yield return Value;
         }
+        public static TruckTankingId Create(Guid value)
+        {
+            // Todo: Enforce invariants
+            return new TruckTankingId(value);
+        }
 
         public static TruckTankingId CreateUnique()
         {

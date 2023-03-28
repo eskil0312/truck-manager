@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -9,6 +10,7 @@ using TruckManager.Application.Common.Interfaces.Percistence;
 using TruckManager.Application.Common.Interfaces.Services;
 using TruckManager.Infrastructure.Authentication;
 using TruckManager.Infrastructure.Persistence;
+using TruckManager.Infrastructure.Persistence.Repositories;
 using TruckManager.Infrastructure.Services;
 
 namespace TruckManager.Infrastrucure;
@@ -25,6 +27,7 @@ public static class DependencyInjection
 
     public static IServiceCollection AddPersistance(this IServiceCollection services, ConfigurationManager configuration)
     {
+        services.AddDbContext<TruckManagerDbContext>(options => options.UseSqlServer(""));
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ITruckRepository, TruckRepository>();
 

@@ -16,6 +16,12 @@ namespace TruckManager.Domain.CompanyAggregate.ValueObjects
             yield return Value;
         }
 
+        public static CompanyId Create(Guid value)
+        {
+            return new CompanyId(value);
+        }
+
+
         public static CompanyId CreateUnique()
         {
             return new(Guid.NewGuid());

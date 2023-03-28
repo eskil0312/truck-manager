@@ -16,6 +16,13 @@ namespace TruckManager.Domain.TruckAggregate.ValueObjects
             yield return Value;
         }
 
+        public static TruckInicdentId Create(Guid value)
+        {
+            // Todo: Enforce invariants
+            return new TruckInicdentId(value);
+        }
+
+
         public static TruckInicdentId CreateUnique()
         {
             return new(Guid.NewGuid());

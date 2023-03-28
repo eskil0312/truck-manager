@@ -1,7 +1,7 @@
 ﻿using TruckManager.Application.Common.Interfaces.Percistence;
 using TruckManager.Domain.Entities;
 
-namespace TruckManager.Infrastructure.Persistence;
+namespace TruckManager.Infrastructure.Persistence.Repositories;
 
 public class UserRepository : IUserRepository
 {

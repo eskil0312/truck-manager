@@ -12,7 +12,7 @@ namespace TruckManager.Application.Trucks.Commands.CreateTruck
 
         public CreateTruckCommandHandler(ITruckRepository truckRepository)
         {
-            this._truckRepository = truckRepository;
+            _truckRepository = truckRepository;
         }
 
         public async Task<ErrorOr<Truck>> Handle(CreateTruckCommand request, CancellationToken cancellationToken)
