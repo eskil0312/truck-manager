@@ -27,7 +27,7 @@ public static class DependencyInjection
 
     public static IServiceCollection AddPersistance(this IServiceCollection services, ConfigurationManager configuration)
     {
-        services.AddDbContext<TruckManagerDbContext>(options => options.UseSqlServer(""));
+        services.AddDbContext<TruckManagerDbContext>(options => options.UseSqlServer());
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ITruckRepository, TruckRepository>();
 

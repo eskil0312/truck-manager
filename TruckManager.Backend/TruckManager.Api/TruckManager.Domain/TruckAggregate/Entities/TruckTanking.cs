@@ -12,14 +12,19 @@ namespace TruckManager.Domain.TruckAggregate.Entities
             Quantiy = quantity;
             Date = date;
         }
-        public string Cost { get; }
-        public string Quantiy { get; }
-        public DateTime Date { get; }
+        public string Cost { get; private set; }
+        public string Quantiy { get; private set; }
+        public DateTime Date { get; private set; }
 
         public static TruckTanking Create(string cost, string quantity, DateTime Date)
         {
             return new(TruckTankingId.CreateUnique(), cost, quantity, Date);
         }
 
+#pragma warning disable CS8618
+        private TruckTanking()
+        {
+        }
+#pragma warning restore CS8618
     }
 }

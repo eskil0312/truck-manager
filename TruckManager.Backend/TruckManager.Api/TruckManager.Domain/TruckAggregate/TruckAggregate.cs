@@ -31,19 +31,21 @@ namespace TruckManager.Domain.TruckAggregate
             CreatedDateTime = createdDateTime;
         }
 
-        public string RegistrationNumber { get; }
 
-        public string FuelType { get; }
 
-        public int FuelTankSize { get; }
+        public string RegistrationNumber { get; private set; }
 
-        public int Weight { get; }
+        public string FuelType { get; private set; }
 
-        public DateTime RegistrationDate { get; }
+        public int FuelTankSize { get; private set; }
 
-        public DateTime VeichleAllowenceExperationDate { get; }
+        public int Weight { get; private set; }
 
-        public CompanyId CompanyId { get; }
+        public DateTime RegistrationDate { get; private set; }
+
+        public DateTime VeichleAllowenceExperationDate { get; private set; }
+
+        public CompanyId CompanyId { get; private set; }
 
         private readonly List<TruckIncident> _incidents = new();
 
@@ -53,9 +55,9 @@ namespace TruckManager.Domain.TruckAggregate
 
         public IReadOnlyList<TruckTanking> Tankings => _tankings.AsReadOnly();
 
-        public DateTime UpdateDateTime { get; }
+        public DateTime UpdateDateTime { get; private set; }
 
-        public DateTime CreatedDateTime { get; }
+        public DateTime CreatedDateTime { get; private set; }
 
 
         public static Truck Create(string registrationNumber,
@@ -76,6 +78,12 @@ namespace TruckManager.Domain.TruckAggregate
                 veichleAllowenceExperationDate,
                 companyId, DateTime.Now, DateTime.Now);
         }
+
+        #pragma warning disable CS8618
+        private Truck( )
+        {
+        }
+        #pragma warning restore CS8618
 
 
     }

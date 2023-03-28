@@ -35,6 +35,13 @@
         {
             return Id.GetHashCode();
         }
+
+        #pragma warning disable CS8618
+        protected Entity()
+        {
+        }
+        #pragma warning restore CS8618
+
     }
 
 }
