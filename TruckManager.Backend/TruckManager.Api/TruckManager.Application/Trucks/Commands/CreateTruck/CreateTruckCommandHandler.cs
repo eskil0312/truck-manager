@@ -25,7 +25,7 @@ namespace TruckManager.Application.Trucks.Commands.CreateTruck
                 weight: request.Weight,
                 registrationDate: request.RegistrationDate,
                 veichleAllowenceExperationDate: request.VeichleAllowenceExperationDate,
-                companyId: CompanyId.CreateUnique());
+                companyId: CompanyId.Create(request.CompanyId));
 
             _truckRepository.Add(truck);
 

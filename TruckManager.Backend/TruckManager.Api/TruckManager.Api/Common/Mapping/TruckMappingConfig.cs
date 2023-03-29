@@ -9,7 +9,9 @@ namespace TruckManager.Api.Common.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<CreateTruckRequest, CreateTruckCommand>();
+            config.NewConfig<(CreateTruckRequest Request, string CompanyId), CreateTruckCommand>()
+                .Map(dest => dest.CompanyId, src => src.CompanyId)
+                .Map(dest => dest, src => src.Request);
             config.NewConfig<Truck, TruckResponse>().Map(dest => dest.Id, src => src.Id.Value);
 
         }
