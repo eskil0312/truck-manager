@@ -44,6 +44,7 @@ namespace TruckManager.Infrastructure.Persistence.Configurations
                 sb.ToTable("TruckTankings");
                 sb.WithOwner().HasForeignKey("TruckId");
                 sb.HasKey(nameof(TruckTanking.Id), "TruckId");
+                sb.OwnsOne(tt => tt.Cost);
                 sb.Property(tt => tt.Id)
                     .HasColumnName("TruckTankingId")
                     .ValueGeneratedNever()
