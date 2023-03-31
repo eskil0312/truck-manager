@@ -1,4 +1,6 @@
-﻿using TruckManager.Application.Common.Interfaces.Percistence;
+﻿using Microsoft.EntityFrameworkCore;
+using TruckManager.Application.Common.Interfaces.Percistence;
+using TruckManager.Domain.CompanyAggregate.ValueObjects;
 using TruckManager.Domain.TruckAggregate;
 
 namespace TruckManager.Infrastructure.Persistence.Repositories
@@ -12,12 +14,18 @@ namespace TruckManager.Infrastructure.Persistence.Repositories
             _dbContext = dbContext;
         }
 
-        public void Add(Truck truck)
+        public async Task Add(Truck truck)
         {
-            _dbContext.Add(truck);
+            await _dbContext.AddAsync(truck);
 
-            _dbContext.SaveChanges();
+            await _dbContext.SaveChangesAsync();
 
         }
+
+        public async Task<IEnumerable<Truck>> GetAllForCompany(CompanyId companyId)
+        {
+            return await _dbContext.Set<Truck>().Where(t => t.CompanyId == companyId).ToListAsync();
+        }
+
     }
 }

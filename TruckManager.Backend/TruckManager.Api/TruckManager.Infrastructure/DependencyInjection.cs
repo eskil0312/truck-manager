@@ -10,6 +10,7 @@ using TruckManager.Application.Common.Interfaces.Percistence;
 using TruckManager.Application.Common.Interfaces.Services;
 using TruckManager.Infrastructure.Authentication;
 using TruckManager.Infrastructure.Persistence;
+using TruckManager.Infrastructure.Persistence.Configurations;
 using TruckManager.Infrastructure.Persistence.Repositories;
 using TruckManager.Infrastructure.Services;
 
@@ -27,7 +28,9 @@ public static class DependencyInjection
 
     public static IServiceCollection AddPersistance(this IServiceCollection services, ConfigurationManager configuration)
     {
-        services.AddDbContext<TruckManagerDbContext>(options => options.UseSqlServer());
+        var truckManagerDbSettings = new TruckManagerDbSettings();
+        configuration.Bind(TruckManagerDbSettings.SectionName, truckManagerDbSettings);
+        services.AddDbContext<TruckManagerDbContext>(options => options.UseSqlServer(truckManagerDbSettings.ConnectionString));
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ITruckRepository, TruckRepository>();
 

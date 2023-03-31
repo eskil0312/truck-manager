@@ -17,7 +17,6 @@ namespace TruckManager.Application.Trucks.Commands.CreateTruck
 
         public async Task<ErrorOr<Truck>> Handle(CreateTruckCommand request, CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
             var truck = Truck.Create(
                 registrationNumber: request.RegistrationNumber,
                 fuelType: request.FuelType,
@@ -27,7 +26,7 @@ namespace TruckManager.Application.Trucks.Commands.CreateTruck
                 veichleAllowenceExperationDate: request.VeichleAllowenceExperationDate,
                 companyId: CompanyId.Create(request.CompanyId));
 
-            _truckRepository.Add(truck);
+            await _truckRepository.Add(truck);
 
             return truck;
 

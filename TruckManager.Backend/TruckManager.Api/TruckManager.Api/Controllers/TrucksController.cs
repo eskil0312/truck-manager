@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using TruckManager.Application.Trucks.Commands.CreateTruck;
+using TruckManager.Application.Trucks.Queries.ListTrucks;
 using TruckManager.Contracts.Truck;
 
 namespace TruckManager.Api.Controllers;
@@ -27,13 +28,12 @@ public class TrucksController : ApiController
             truck => Ok(_mapper.Map<TruckResponse>(truck)),
             Problem);
     }
-    //[HttpGet]
-    //public async Task<IActionResult> ListTrucks()
-    //{
-    //    var command = _mapper.Map<CreateTruckCommand>(request);
-    //    var createTruckResult = await _mediator.Send(command);
-    //    return createTruckResult.Match(
-    //        truck => Ok(_mapper.Map<TruckResponse>(truck)),
-    //        Problem);
-    //}
+    [HttpGet]
+    public async Task<IActionResult> ListTrucks(Guid companyId)
+    {
+        var createTruckResult = await _mediator.Send(new ListTrucksQuery(companyId));
+        return createTruckResult.Match(
+            trucks => Ok(trucks.Select(t => _mapper.Map<TruckResponse>(t))),
+            Problem);
+    }
 }

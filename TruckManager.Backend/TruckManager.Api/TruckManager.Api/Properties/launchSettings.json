@@ -1,7 +1,7 @@
 {
   "profiles": {
     
-    "https": {
+    "TruckManager.Api": {
       "commandName": "Project",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
