@@ -51,7 +51,6 @@ namespace TruckManager.Infrastructure.Persistence.Configurations
                     .HasConversion(id => id.Value, value => TruckTankingId.Create(value));
             });
 
-
         }
 
         private void ConfigureTucksTable(EntityTypeBuilder<Truck> builder)

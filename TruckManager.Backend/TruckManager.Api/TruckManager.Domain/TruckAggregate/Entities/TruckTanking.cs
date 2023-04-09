@@ -6,20 +6,20 @@ namespace TruckManager.Domain.TruckAggregate.Entities
 {
     public sealed class TruckTanking : Entity<TruckTankingId>
     {
-        private TruckTanking(TruckTankingId truckIncidentId, Cost cost, string quantity, DateTime date)
-            : base(truckIncidentId)
+        private TruckTanking(TruckTankingId truckTankingId, Cost cost, int quantity, DateTime date)
+            : base(truckTankingId)
         {
             Cost = cost;
             Quantiy = quantity;
             Date = date;
         }
         public Cost Cost { get; private set; }
-        public string Quantiy { get; private set; }
+        public int Quantiy { get; private set; }
         public DateTime Date { get; private set; }
 
-        public static TruckTanking Create(Cost cost, string quantity, DateTime Date)
+        public static TruckTanking Create(Cost cost, int quantity)
         {
-            return new(TruckTankingId.CreateUnique(), cost, quantity, Date);
+            return new(TruckTankingId.CreateUnique(), cost, quantity, DateTime.Now);
         }
 
 #pragma warning disable CS8618

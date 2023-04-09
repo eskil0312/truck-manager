@@ -1,6 +1,7 @@
 ﻿using MapsterMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using TruckManager.Application.Trucks.Commands.AddTanking;
 using TruckManager.Application.Trucks.Commands.CreateTruck;
 using TruckManager.Application.Trucks.Queries.ListTrucks;
 using TruckManager.Contracts.Truck;
@@ -34,6 +35,16 @@ public class TrucksController : ApiController
         var createTruckResult = await _mediator.Send(new ListTrucksQuery(companyId));
         return createTruckResult.Match(
             trucks => Ok(trucks.Select(t => _mapper.Map<TruckResponse>(t))),
+            Problem);
+    }
+
+    [HttpPost("{truckId}")]
+    public async Task<IActionResult> AddTanking(AddTruckTankingRequest request, string companyId, string truckId)
+    {
+        var command = _mapper.Map<AddTruckTankingCommand>((request, companyId, truckId));
+        var addTruckTankingResponse = await _mediator.Send(command);
+        return addTruckTankingResponse.Match(
+            tanking => Ok(_mapper.Map<TruckTankingResponse>(tanking)),
             Problem);
     }
 }

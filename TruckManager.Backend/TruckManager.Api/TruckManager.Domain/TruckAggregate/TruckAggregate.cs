@@ -51,7 +51,7 @@ namespace TruckManager.Domain.TruckAggregate
 
         public IReadOnlyList<TruckIncident> Incidents => _incidents.AsReadOnly();
 
-        public List<TruckTanking> _tankings = new();
+        public readonly List<TruckTanking> _tankings = new();
 
         public IReadOnlyList<TruckTanking> Tankings => _tankings.AsReadOnly();
 
@@ -59,7 +59,7 @@ namespace TruckManager.Domain.TruckAggregate
 
         public DateTime CreatedDateTime { get; private set; }
 
-
+        
         public static Truck Create(string registrationNumber,
             string fuelType,
             int fuelTankSize,
@@ -77,6 +77,11 @@ namespace TruckManager.Domain.TruckAggregate
                 registrationDate,
                 veichleAllowenceExperationDate,
                 companyId, DateTime.Now, DateTime.Now);
+        }
+
+        public void AddTruckTanking(TruckTanking truckTanking)
+        {
+           _tankings.Add(truckTanking);
         }
 
         #pragma warning disable CS8618

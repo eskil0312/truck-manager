@@ -26,11 +26,5 @@ namespace TruckManager.Domain.Common.ValueObjects
             return new Cost(amount, currency);
         }
 
-#pragma warning disable CS8618
-        private Cost()
-        {
-        }
-#pragma warning restore CS8618
-
     }
 }
