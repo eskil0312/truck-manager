@@ -16,7 +16,7 @@ namespace TruckManager.Infrastructure.Persistence.Configurations
             ConfigureTruckIncidentsTable(builder);
         }
 
-        private void ConfigureTruckIncidentsTable(EntityTypeBuilder<Truck> builder)
+        private static void ConfigureTruckIncidentsTable(EntityTypeBuilder<Truck> builder)
         {
             builder.OwnsMany(t => t.Incidents, sb =>
             {
@@ -37,7 +37,7 @@ namespace TruckManager.Infrastructure.Persistence.Configurations
                 .SetPropertyAccessMode(PropertyAccessMode.Field);
         }
 
-        private void ConfigureTruckTankingsTable(EntityTypeBuilder<Truck> builder)
+        private static void ConfigureTruckTankingsTable(EntityTypeBuilder<Truck> builder)
         {
             builder.OwnsMany(t => t.Tankings, sb => 
             {
@@ -53,7 +53,7 @@ namespace TruckManager.Infrastructure.Persistence.Configurations
 
         }
 
-        private void ConfigureTucksTable(EntityTypeBuilder<Truck> builder)
+        private static void ConfigureTucksTable(EntityTypeBuilder<Truck> builder)
         {
             builder.ToTable("Trucks");
             builder.HasKey(t => t.Id);

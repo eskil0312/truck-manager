@@ -2,9 +2,9 @@
 
 namespace TruckManager.Domain.TruckAggregate.ValueObjects
 {
-    public sealed class TruckId : ValueObject
+    public sealed class TruckId : AggregateRootId<Guid>
     {
-        public Guid Value { get; }
+        public override Guid Value { get; protected set; }
 
         public TruckId(Guid value) 
         { 

@@ -17,4 +17,8 @@
 		<ProjectReference Include="..\TruckManager.Domain\TruckManager.Domain.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Companies\Queries\" />
+	</ItemGroup>
+
 </Project>

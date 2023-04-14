@@ -5,7 +5,7 @@ using TruckManager.Domain.TruckAggregate.ValueObjects;
 
 namespace TruckManager.Domain.TruckAggregate
 {
-    public sealed class Truck : AggregateRoot<TruckId>
+    public sealed class Truck : AggregateRoot<TruckId, Guid>
     {
         private Truck(
             TruckId truckId,
@@ -30,8 +30,6 @@ namespace TruckManager.Domain.TruckAggregate
             UpdateDateTime = updateDateTime;
             CreatedDateTime = createdDateTime;
         }
-
-
 
         public string RegistrationNumber { get; private set; }
 

@@ -29,6 +29,7 @@ public class TrucksController : ApiController
             truck => Ok(_mapper.Map<TruckResponse>(truck)),
             Problem);
     }
+
     [HttpGet]
     public async Task<IActionResult> ListTrucks(Guid companyId)
     {
@@ -38,7 +39,7 @@ public class TrucksController : ApiController
             Problem);
     }
 
-    [HttpPost("{truckId}")]
+    [HttpPost("{truckId}/tanking")]
     public async Task<IActionResult> AddTanking(AddTruckTankingRequest request, string companyId, string truckId)
     {
         var command = _mapper.Map<AddTruckTankingCommand>((request, companyId, truckId));

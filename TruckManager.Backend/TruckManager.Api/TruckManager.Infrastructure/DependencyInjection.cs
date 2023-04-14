@@ -33,6 +33,7 @@ public static class DependencyInjection
         services.AddDbContext<TruckManagerDbContext>(options => options.UseSqlServer(truckManagerDbSettings.ConnectionString));
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ITruckRepository, TruckRepository>();
+        services.AddScoped<ICompanyRespository, CompanyRepository>();
 
 
         return services;

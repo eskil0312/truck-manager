@@ -4,7 +4,7 @@ using TruckManager.Domain.UserAggregate.ValueObjects;
 
 namespace TruckManager.Domain.UserAggregate
 {
-    public class User : AggregateRoot<UserId>
+    public class User : AggregateRoot<UserId, Guid>
     {
         private User(UserId userId, string firstName, string lastName, string email, string password, CompanyId companyId, DateTime updateDateTime, DateTime createdDateTime)
             : base(userId)
