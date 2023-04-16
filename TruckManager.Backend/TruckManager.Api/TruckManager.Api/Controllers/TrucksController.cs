@@ -34,6 +34,7 @@ public class TrucksController : ApiController
     public async Task<IActionResult> ListTrucks(Guid companyId)
     {
         var createTruckResult = await _mediator.Send(new ListTrucksQuery(companyId));
+        var first = createTruckResult.Value.First().Id.Value.ToString();
         return createTruckResult.Match(
             trucks => Ok(trucks.Select(t => _mapper.Map<TruckResponse>(t))),
             Problem);

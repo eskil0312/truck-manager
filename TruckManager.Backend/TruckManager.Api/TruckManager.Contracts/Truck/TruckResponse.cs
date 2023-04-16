@@ -1,6 +1,6 @@
 ﻿namespace TruckManager.Contracts.Truck
 {
-    public record TruckResponse(Guid Id,
+    public record TruckResponse(string Id,
             string RegistrationNumber,
             string FuelType,
             int FuelTankSize,
@@ -8,7 +8,7 @@
             DateTime VeichleAllowenceExperationDate,
             int Weight,
             List<string> Incidents,
-            List<string> Tankings,
+            List<TruckTankingResponse> Tankings,
             DateTime UpdateDateTime,
             DateTime CreatedDateTime);
 }

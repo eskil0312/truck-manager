@@ -1,5 +1,7 @@
-﻿using TruckManager.Application.Common.Interfaces.Percistence;
+﻿using Microsoft.EntityFrameworkCore;
+using TruckManager.Application.Common.Interfaces.Percistence;
 using TruckManager.Domain.CompanyAggregate;
+using TruckManager.Domain.CompanyAggregate.ValueObjects;
 
 namespace TruckManager.Infrastructure.Persistence.Repositories
 {
@@ -17,6 +19,11 @@ namespace TruckManager.Infrastructure.Persistence.Repositories
             await _dbContext.AddAsync(company);
 
             await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task<Company?> GetCompany(CompanyId companyId)
+        {
+            return await _dbContext.Set<Company>().Where(c => c.Id == companyId).FirstOrDefaultAsync();
         }
     }
 }
