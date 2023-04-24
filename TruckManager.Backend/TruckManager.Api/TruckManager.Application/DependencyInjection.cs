@@ -12,6 +12,7 @@ public static class DependencyInjection
     {
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
         services.AddScoped(typeof(IPipelineBehavior<,>), typeof(Validationbehavior<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
         return services;
     }
