@@ -1,8 +1,13 @@
 ﻿namespace TruckManager.Domain.Common.Models
 {
-    public abstract class Entity<TId> : IEquatable<Entity<TId>>
-        where TId : notnull
+    public abstract class Entity<TId> : IEquatable<Entity<TId>>, IHasDomainEvents
+        where TId : ValueObject
     {
+
+        private readonly List<IDomainEvent> _domainEvents = new();
+
+        public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents.AsReadOnly();
+
         public TId Id { get; protected set;}
 
         protected Entity(TId id)
@@ -36,7 +41,17 @@
             return Id.GetHashCode();
         }
 
-        #pragma warning disable CS8618
+        public void AddDomainEvent(IDomainEvent domainEvent)
+        {
+            _domainEvents.Add(domainEvent);
+        }
+
+        public void ClearDomainEvents()
+        {
+            _domainEvents.Clear();
+        }
+
+#pragma warning disable CS8618
         protected Entity()
         {
         }

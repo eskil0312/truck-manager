@@ -1,6 +1,7 @@
 ﻿using TruckManager.Domain.Common.Models;
 using TruckManager.Domain.CompanyAggregate.ValueObjects;
 using TruckManager.Domain.TruckAggregate.Entities;
+using TruckManager.Domain.TruckAggregate.Events;
 using TruckManager.Domain.TruckAggregate.ValueObjects;
 
 namespace TruckManager.Domain.TruckAggregate
@@ -17,7 +18,8 @@ namespace TruckManager.Domain.TruckAggregate
             DateTime veichleAllowenceExperationDate,
             CompanyId companyId,
             DateTime updateDateTime,
-            DateTime createdDateTime)
+            DateTime createdDateTime,
+            List<TruckTanking> tankings)
            : base(truckId)
         {
             RegistrationNumber = registrationNumber;
@@ -29,6 +31,7 @@ namespace TruckManager.Domain.TruckAggregate
             CompanyId = companyId;
             UpdateDateTime = updateDateTime;
             CreatedDateTime = createdDateTime;
+            _tankings = tankings;
         }
 
         public string RegistrationNumber { get; private set; }
@@ -64,9 +67,10 @@ namespace TruckManager.Domain.TruckAggregate
             int weight,
             DateTime registrationDate,
             DateTime veichleAllowenceExperationDate,
-            CompanyId companyId)
+            CompanyId companyId,
+            List<TruckTanking>? tankings = null)
         {
-            return new(
+            var truck = new Truck(
                 TruckId.CreateUnique(),
                 registrationNumber,
                 fuelType,
@@ -74,8 +78,14 @@ namespace TruckManager.Domain.TruckAggregate
                 weight,
                 registrationDate,
                 veichleAllowenceExperationDate,
-                companyId, DateTime.Now, DateTime.Now);
+                companyId, DateTime.Now, DateTime.Now, tankings ?? new());
+
+            truck.AddDomainEvent(new TruckCreated(truck));
+
+            return truck;
+
         }
+
 
         public void AddTruckTanking(TruckTanking truckTanking)
         {
